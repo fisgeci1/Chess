@@ -39,29 +39,28 @@ public class Tile extends JPanel {
     }
 
 
-
     @Override
     protected void paintComponent(Graphics g) {
-            g.setColor(colorOfTile);
-            g.fillRect(0, 0, 80, 80);
-            this.revalidate();
-            if (pieceType != TypeOfPiece.EMPTY) {
-                if (tileState == TileState.ATTACKING) {
-                    g.setColor(Color.red);
-                    g.fillRect(25, 25, 50, 50);
-                }
-                this.add(piece);
-
-            } else {
-                if (tileState == TileState.AVAILABLE_MOVE) {
-
-                    g.setColor(Color.GRAY);
-                    g.fillOval(20, 20, 40, 40);
-                } else {
-                    removeAll();
-                }
-
+        g.setColor(colorOfTile);
+        g.fillRect(0, 0, 100, 100);
+        this.revalidate();
+        if (pieceType != TypeOfPiece.EMPTY) {
+            if (tileState == TileState.ATTACKING) {
+                g.setColor(Color.red);
+                g.fillRect(25, 25, 50, 50);
             }
+            this.add(piece);
+
+        } else {
+            if (tileState == TileState.AVAILABLE_MOVE) {
+
+                g.setColor(Color.GRAY);
+                g.fillOval(20, 20, 40, 40);
+            } else {
+                removeAll();
+            }
+
+        }
 //            if (tileState == TileState.ATTACKED_BY_WHITE) {
 //                g.setColor(Color.CYAN);
 //                g.fillRect(0, 0, 100, 100);
@@ -75,7 +74,9 @@ public class Tile extends JPanel {
 //                g.setColor(Color.BLUE);
 //                g.fillRect(0, 0, 100, 100);
 //            }
-        }
+
+
+    }
 
     public void paintTile() {
         repaint();

@@ -70,9 +70,7 @@ public class Board extends JPanel {
         try {
             cords.forEach(tileCord -> {
                 if (tiles[tileCord[0]][tileCord[1]].getTileState() != TileState.AVAILABLE_MOVE) {
-//
 
-                    //wrong
 
                     Turn colorOfPieceThatIsAttacking = gameController.getColorOf(pieceThatIsAttacking.getTypeOfPiece());
 

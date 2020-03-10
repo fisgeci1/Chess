@@ -159,26 +159,26 @@ public class PieceFactory {
 
     public void setUpKingAndQueens(Tile[][] chessBoard) {
 
-        chessBoard[7][3].setPieceTo(TypeOfPiece.WHITE_KING);
-        chessBoard[7][3].setPieceInstance(this.createPieceInstance(TypeOfPiece.WHITE_KING, 7, 3));
-        chessBoard[7][3].getPieceInstance().setGameController(gameController);
-        chessBoard[7][3].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.WHITE_KING));
-
-        chessBoard[7][4].setPieceTo(TypeOfPiece.WHITE_QUEEN);
-        chessBoard[7][4].setPieceInstance(this.createPieceInstance(TypeOfPiece.WHITE_QUEEN, 7, 4));
+        chessBoard[7][4].setPieceTo(TypeOfPiece.WHITE_KING);
+        chessBoard[7][4].setPieceInstance(this.createPieceInstance(TypeOfPiece.WHITE_KING, 7, 4));
         chessBoard[7][4].getPieceInstance().setGameController(gameController);
-        chessBoard[7][4].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.WHITE_QUEEN));
+        chessBoard[7][4].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.WHITE_KING));
+
+        chessBoard[7][3].setPieceTo(TypeOfPiece.WHITE_QUEEN);
+        chessBoard[7][3].setPieceInstance(this.createPieceInstance(TypeOfPiece.WHITE_QUEEN, 7, 3));
+        chessBoard[7][3].getPieceInstance().setGameController(gameController);
+        chessBoard[7][3].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.WHITE_QUEEN));
 
 
-        chessBoard[0][3].setPieceTo(TypeOfPiece.BLACK_KING);
-        chessBoard[0][3].setPieceInstance(this.createPieceInstance(TypeOfPiece.BLACK_KING, 0, 3));
-        chessBoard[0][3].getPieceInstance().setGameController(gameController);
-        chessBoard[0][3].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.BLACK_KING));
-
-        chessBoard[0][4].setPieceTo(TypeOfPiece.BLACK_QUEEN);
-        chessBoard[0][4].setPieceInstance(this.createPieceInstance(TypeOfPiece.BLACK_QUEEN, 0, 4));
+        chessBoard[0][4].setPieceTo(TypeOfPiece.BLACK_KING);
+        chessBoard[0][4].setPieceInstance(this.createPieceInstance(TypeOfPiece.BLACK_KING, 0, 4));
         chessBoard[0][4].getPieceInstance().setGameController(gameController);
-        chessBoard[0][4].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.BLACK_QUEEN));
+        chessBoard[0][4].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.BLACK_KING));
+
+        chessBoard[0][3].setPieceTo(TypeOfPiece.BLACK_QUEEN);
+        chessBoard[0][3].setPieceInstance(this.createPieceInstance(TypeOfPiece.BLACK_QUEEN, 0, 3));
+        chessBoard[0][3].getPieceInstance().setGameController(gameController);
+        chessBoard[0][3].setPieceImage(imageParser.getLabelIconOfPiece(TypeOfPiece.BLACK_QUEEN));
 
     }
 

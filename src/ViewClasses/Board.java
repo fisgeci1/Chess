@@ -71,7 +71,6 @@ public class Board extends JPanel {
             cords.forEach(tileCord -> {
                 if (tiles[tileCord[0]][tileCord[1]].getTileState() != TileState.AVAILABLE_MOVE) {
 
-
                     Turn colorOfPieceThatIsAttacking = gameController.getColorOf(pieceThatIsAttacking.getTypeOfPiece());
 
                     TileState whatColorIsAttacking = (colorOfPieceThatIsAttacking == Turn.BLACK) ? TileState.ATTACKED_BY_BLACK : TileState.ATTACKED_BY_WHITE;

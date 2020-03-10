@@ -19,8 +19,8 @@ public class GameController {
     private Piece pieceThatIsBeingMoved = null;
     private int numberOfMovesForBlackKing = 0;
     private int numberOfMovesForWhiteKing = 0;
-    private int[] whiteKingPos = new int[]{7, 3};
-    private int[] blackKingPos = new int[]{0, 3};
+    private int[] whiteKingPos = new int[]{7, 4};
+    private int[] blackKingPos = new int[]{0, 4};
     private boolean isCheck = true;
     private boolean isDummyMove = false;
 
@@ -199,7 +199,7 @@ public class GameController {
 
 
         isDummyMove = true;
-        selectedTile.getPieceInstance().setTilesThatAreAttacked(row, col);
+//        selectedTile.getPieceInstance().setTilesThatAreAttacked(row, col);
         chessBoard.repaintTiles(tiles);
     }
 
@@ -248,21 +248,6 @@ public class GameController {
         return canMove;
     }
 
-    private void reEvaluatePinnedFigures() {
-        for (int i = 0; i < 8; i++)
-            for (int j = 0; j < 8; j++) {
-                try {
-                    chessBoard.getChessBoard()[i][j].getPieceInstance().setPiecesThatArePinned(i, j);
-                } catch (NullPointerException e) {
-
-                }
-            }
-    }
-
-    public void setStateOfPiece(int row, int col, State state) {
-
-        chessBoard.getChessBoard()[row][col].getPieceInstance().setState(state);
-    }
 
     public void setStateOfTile(int row, int col, TileState state) {
 
@@ -274,6 +259,7 @@ public class GameController {
 
         int[] posOfWhiteKing = new int[]{getWhiteKingPos()[0], getWhiteKingPos()[1]};
         int[] posOfBlackKing = new int[]{getBlackKingPos()[0], getBlackKingPos()[1]};
+        isDummyMove = false;
         if (getColorOf(chessBoard.getChessBoard()[row][col].getPiece()) != turn && chessBoard.getChessBoard()[row][col].getPiece() != TypeOfPiece.EMPTY) {
             Tile[][] createDummyBoard = copyBoard();
             dummyBoard = createDummyBoard;

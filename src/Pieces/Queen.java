@@ -146,9 +146,7 @@ public class Queen implements Piece {
 
         try {
             if (!isTake) {
-                avaliable = gameController.checkIfMoveIsValid(rowToCheck, colToCheck);
-            } else {
-                avaliable = gameController.checkIfCanTake(rowToCheck, colToCheck);
+                avaliable = gameController.checkIfMoveIsValid(rowToCheck, colToCheck) ||  gameController.checkIfCanTake(rowToCheck, colToCheck);
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -165,8 +163,7 @@ public class Queen implements Piece {
         int offSet = 1;
         while (tryAndSetTileToAttack(row - offSet, col - offSet)) {
             tilesBeingAttacked.add(new int[]{row - offSet, col - offSet});
-            if (gameController.getChessBoard()[row - offSet][col - offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row - offSet][col - offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row - offSet][col - offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row - offSet][col - offSet].getPiece() != TypeOfPiece.EMPTY) {
                 break;
             }
             offSet++;
@@ -176,38 +173,34 @@ public class Queen implements Piece {
         while (tryAndSetTileToAttack(row - offSet, col + offSet)) {
             tilesBeingAttacked.add(new int[]{row - offSet, col + offSet});
 
-            if (gameController.getChessBoard()[row - offSet][col + offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row - offSet][col + offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row - offSet][col + offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row - offSet][col + offSet].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
         offSet = 1;
         while (tryAndSetTileToAttack(row + offSet, col - offSet)) {
             tilesBeingAttacked.add(new int[]{row + offSet, col - offSet});
-            if (gameController.getChessBoard()[row + offSet][col - offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row + offSet][col - offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row + offSet][col - offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row + offSet][col - offSet].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
         offSet = 1;
         while (tryAndSetTileToAttack(row + offSet, col + offSet)) {
             tilesBeingAttacked.add(new int[]{row + offSet, col + offSet});
 
-            if (gameController.getChessBoard()[row + offSet][col + offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row + offSet][col + offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row + offSet][col + offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row + offSet][col + offSet].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
         offSet = 1;
         while (tryAndSetTileToAttack(row - offSet, col)) {
             tilesBeingAttacked.add(new int[]{row - offSet, col});
-            if (gameController.getChessBoard()[row - offSet][col].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row - offSet][col].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row - offSet][col].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row - offSet][col].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
 
@@ -215,29 +208,26 @@ public class Queen implements Piece {
         while (tryAndSetTileToAttack(row + offSet, col)) {
             tilesBeingAttacked.add(new int[]{row + offSet, col});
 
-            if (gameController.getChessBoard()[row + offSet][col].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row + offSet][col].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row + offSet][col].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row + offSet][col].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
         offSet = 1;
         while (tryAndSetTileToAttack(row, col - offSet)) {
             tilesBeingAttacked.add(new int[]{row, col - offSet});
-            if (gameController.getChessBoard()[row][col - offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row][col - offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row][col - offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row][col - offSet].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
         offSet = 1;
         while (tryAndSetTileToAttack(row, col + offSet)) {
             tilesBeingAttacked.add(new int[]{row, col + offSet});
 
-            if (gameController.getChessBoard()[row][col + offSet].getPiece() != TypeOfPiece.EMPTY &&
-                    (gameController.getChessBoard()[row][col + offSet].getPiece() != TypeOfPiece.WHITE_KING && gameController.getChessBoard()[row][col + offSet].getPiece() != TypeOfPiece.BLACK_KING)) {
+            if (gameController.getChessBoard()[row][col + offSet].getPiece() != TypeOfPiece.EMPTY)
                 break;
-            }
+
             offSet++;
         }
 

@@ -108,16 +108,16 @@ public class Board extends JPanel {
         pieceFactory.setUpPawns(chessBoard);
 
 
-        pieceFactory.setUpRooks(chessBoard);
-
-
-        pieceFactory.setUpKnights(chessBoard);
-
-
+//        pieceFactory.setUpRooks(chessBoard);
+//
+//
+//        pieceFactory.setUpKnights(chessBoard);
+//
+//
         pieceFactory.setUpBishops(chessBoard);
-
-
-        pieceFactory.setUpKingAndQueens(chessBoard);
+//
+//
+//        pieceFactory.setUpKingAndQueens(chessBoard);
 
 
     }

@@ -5,11 +5,10 @@ import ViewClasses.Board;
 import ViewClasses.ImageParser;
 import ViewClasses.Tile;
 
-//TODO implement check enforcement rule-DONE
-//TODO Make pawns transform when they reach the end of the board
-//TODO Implement Check Mate!!
+import javax.swing.*;
+
 //TODO Add Castle
-//TODO Add Pinned functionality to chessClone
+//TODO Fix transform of figures
 
 public class GameController {
     private Board chessBoard;
@@ -71,8 +70,17 @@ public class GameController {
     }
 
     public void movePiece(Tile selectedTile, int row, int col, boolean fakeMove) {
-        if (selectedTile.getPiece() == TypeOfPiece.BLACK_PAWN || selectedTile.getPiece() == TypeOfPiece.BLACK_PAWN)
-            selectedTile = getTransformOfTileIfAvailable(selectedTile);
+
+        selectedTile.removeAll();
+        selectedTile.setPieceInstance(pieceThatIsBeingMoved);
+        selectedTile.setPieceTo(pieceThatIsBeingMoved.getTypeOfPiece());
+        if (pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.WHITE_PAWN || pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.BLACK_PAWN) {
+            selectedTile.removeAll();
+            selectedTile.setPieceInstance(getTransformOfTileIfAvailable(selectedTile.getPieceInstance()));
+            selectedTile.setPieceTo(selectedTile.getPieceInstance().getTypeOfPiece());
+            selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(selectedTile.getPiece()));
+
+        }
 
         if (pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.BLACK_KING || pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.WHITE_KING) {
             if (getColorOf(pieceThatIsBeingMoved.getTypeOfPiece()) == Turn.BLACK) {
@@ -82,10 +90,6 @@ public class GameController {
             }
         }
 
-
-        selectedTile.removeAll();
-        selectedTile.setPieceInstance(pieceThatIsBeingMoved);
-        selectedTile.setPieceTo(pieceThatIsBeingMoved.getTypeOfPiece());
         if (!fakeMove) {
             selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(pieceThatIsBeingMoved.getTypeOfPiece()));
             pieceThatIsBeingMoved.setNumOfMoves(pieceThatIsBeingMoved.getNumOfMoves() + 1);
@@ -115,23 +119,46 @@ public class GameController {
 
     }
 
-    public Tile getTransformOfTileIfAvailable(Tile tileToCheck) {
-        Tile transformedTile = tileToCheck;
-
-        if (getColorOf(tileToCheck.getPiece()) == Turn.BLACK) {
-            if (tileToCheck.getTileRow() == 0) {
-
-                //TODO Code for picking what figure the pawn transforms into
+    public Piece getTransformOfTileIfAvailable(Piece pieceToCheck) {
+        Piece tranformedPiece = pieceToCheck;
+        PieceFactory pieceFactory = new PieceFactory();
+        pieceFactory.setGameController(this);
+        if (getColorOf(pieceToCheck.getTypeOfPiece()) == Turn.BLACK) {
+            if (pieceToCheck.getRow() == 6) {
+                String pawnTransform = JOptionPane.showInputDialog("q for queen \nk for knight\nb for bishop\nr for rook");
+                switch (pawnTransform) {
+                    case "q":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.BLACK_QUEEN, 7, tranformedPiece.getCol());
+                    case "k":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.BLACK_KNIGHT, 7, tranformedPiece.getCol());
+                    case "b":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.BLACK_BISHOP, 7, tranformedPiece.getCol());
+                    case "r":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.BLACK_ROOK, 7, tranformedPiece.getCol());
+                    default:
+                        break;
+                }
 
             }
         } else {
-            if (tileToCheck.getTileRow() == 7) {
+            if (pieceToCheck.getRow() == 1) {
 
-                //TODO Code for picking what figure the pawn transforms into
-
+                String pawnTransform = JOptionPane.showInputDialog("q for queen \nk for knight\nb for bishop\nr for rook");
+                switch (pawnTransform) {
+                    case "q":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.WHITE_QUEEN, 0, tranformedPiece.getCol());
+                    case "k":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.WHITE_KNIGHT, 0, tranformedPiece.getCol());
+                    case "b":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.WHITE_BISHOP, 0, tranformedPiece.getCol());
+                    case "r":
+                        return pieceFactory.createPieceInstance(TypeOfPiece.WHITE_ROOK, 0, tranformedPiece.getCol());
+                    default:
+                        break;
+                }
             }
         }
-        return transformedTile;
+        return pieceToCheck;
     }
 
     public boolean checkIfCheck(Tile[][] tiles) {
@@ -172,8 +199,6 @@ public class GameController {
 
     private void moveDummy(Tile[][] tiles, int row, int col) {
         Tile selectedTile = tiles[row][col];
-        if (selectedTile.getPiece() == TypeOfPiece.BLACK_PAWN || selectedTile.getPiece() == TypeOfPiece.BLACK_PAWN)
-            selectedTile = getTransformOfTileIfAvailable(selectedTile);
 
         if (pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.BLACK_KING || pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.WHITE_KING) {
             if (getColorOf(pieceThatIsBeingMoved.getTypeOfPiece()) == Turn.BLACK) {
@@ -230,8 +255,6 @@ public class GameController {
 
             int checkOppositeAttack = (turn == Turn.BLACK) ? 10 : -10;
             if (potentialTileToMoveTo.getTileState().typeOfState == checkOppositeAttack || potentialTileToMoveTo.getTileState().typeOfState == 20) {
-
-                System.out.println("King can not move there " + row + "/ " + col);
                 return false;
             }
             Tile[][] createDummyBoard = copyBoard();
@@ -249,11 +272,6 @@ public class GameController {
     }
 
 
-    public void setStateOfTile(int row, int col, TileState state) {
-
-        chessBoard.getChessBoard()[row][col].setTileState(state);
-    }
-
     public boolean checkIfCanTake(int row, int col) {
         boolean canTake = false;
 
@@ -265,7 +283,6 @@ public class GameController {
             dummyBoard = createDummyBoard;
             moveDummy(createDummyBoard, row, col);
             canTake = !checkIfCheck(createDummyBoard);
-            System.out.println(canTake);
             setWhiteKingPos(posOfWhiteKing);
             setBlackKingPos(posOfBlackKing);
 

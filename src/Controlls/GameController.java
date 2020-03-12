@@ -7,8 +7,6 @@ import ViewClasses.Tile;
 
 import javax.swing.*;
 
-//TODO Add Castle
-//TODO Fix transform of figures
 
 public class GameController {
     private Board chessBoard;
@@ -16,8 +14,6 @@ public class GameController {
     private Turn turn = Turn.WHITE;
     private Tile[][] dummyBoard = new Tile[8][8];
     private Piece pieceThatIsBeingMoved = null;
-    private int numberOfMovesForBlackKing = 0;
-    private int numberOfMovesForWhiteKing = 0;
     private int[] whiteKingPos = new int[]{7, 4};
     private int[] blackKingPos = new int[]{0, 4};
     private boolean isCheck = true;
@@ -34,7 +30,7 @@ public class GameController {
         Tile selectedTile = chessBoard.getChessBoard()[row][col];
         TypeOfPiece pieceSelected = selectedTile.getPiece();
 
-        if (pieceSelected != TypeOfPiece.EMPTY && turn == getColorOf(pieceSelected)) {
+        if (selectedTile.getPieceInstance() != null && selectedTile.getPieceInstance().getState() != State.CanCastle && pieceSelected != TypeOfPiece.EMPTY && turn == getColorOf(pieceSelected)) {
             if (pieceThatIsBeingMoved != null) {
                 resetTileStates();
                 chessBoard.repaintTiles(chessBoard.getChessBoard());
@@ -54,11 +50,14 @@ public class GameController {
             chessBoard.repaintTiles(chessBoard.getChessBoard());
         } else if (selectedTile.getTileState() == TileState.AVAILABLE_MOVE) {
 
-            movePiece(selectedTile, row, col, false);
+            if (selectedTile.getPieceInstance() != null && selectedTile.getPieceInstance().getState() == State.CanCastle) {
+                System.out.println("Tryna castle");
+                castle(selectedTile);
+            } else {
+                movePiece(selectedTile, row, col, false);
+            }
             resetTileStates();
             resetPieceStates();
-            isDummyMove = false;
-            selectedTile.getPieceInstance().setTilesThatAreAttacked(row, col);
             turn = (turn == Turn.BLACK) ? Turn.WHITE : Turn.BLACK;
 
             chessBoard.repaintTiles(chessBoard.getChessBoard());
@@ -69,17 +68,38 @@ public class GameController {
         return validSelection;
     }
 
+    private void castle(Tile selectedTile) {
+        int newPositionOfKing = (selectedTile.getTileCol() + 5) / 2;
+        int newPositionOfRook = (selectedTile.getTileCol() > 4) ? newPositionOfKing - 1 : newPositionOfKing + 1;
+        System.out.println("newPosition of King" + newPositionOfKing + " new position of Rook " + newPositionOfRook);
+
+        pieceThatIsBeingMoved = chessBoard.getChessBoard()[selectedTile.getTileRow()][4].getPieceInstance();
+
+
+        movePiece(chessBoard.getChessBoard()[selectedTile.getTileRow()][newPositionOfKing], selectedTile.getTileRow(), newPositionOfKing, false);
+
+        chessBoard.getChessBoard()[selectedTile.getTileRow()][4].setPieceInstance(null);
+        chessBoard.getChessBoard()[selectedTile.getTileRow()][4].setPieceTo(TypeOfPiece.EMPTY);
+        pieceThatIsBeingMoved = chessBoard.getChessBoard()[selectedTile.getTileRow()][selectedTile.getTileCol()].getPieceInstance();
+
+        movePiece(chessBoard.getChessBoard()[selectedTile.getTileRow()][newPositionOfRook], selectedTile.getTileRow(), newPositionOfRook, false);
+
+        chessBoard.getChessBoard()[selectedTile.getTileRow()][selectedTile.getTileCol()].setPieceInstance(null);
+        chessBoard.getChessBoard()[selectedTile.getTileRow()][selectedTile.getTileCol()].setPieceTo(TypeOfPiece.EMPTY);
+
+    }
+
     public void movePiece(Tile selectedTile, int row, int col, boolean fakeMove) {
 
         selectedTile.removeAll();
         selectedTile.setPieceInstance(pieceThatIsBeingMoved);
         selectedTile.setPieceTo(pieceThatIsBeingMoved.getTypeOfPiece());
+        selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(selectedTile.getPieceInstance().getTypeOfPiece()));
         if (pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.WHITE_PAWN || pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.BLACK_PAWN) {
             selectedTile.removeAll();
             selectedTile.setPieceInstance(getTransformOfTileIfAvailable(selectedTile.getPieceInstance()));
             selectedTile.setPieceTo(selectedTile.getPieceInstance().getTypeOfPiece());
-            selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(selectedTile.getPiece()));
-
+            selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(selectedTile.getPieceInstance().getTypeOfPiece()));
         }
 
         if (pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.BLACK_KING || pieceThatIsBeingMoved.getTypeOfPiece() == TypeOfPiece.WHITE_KING) {
@@ -90,8 +110,9 @@ public class GameController {
             }
         }
 
+
         if (!fakeMove) {
-            selectedTile.setPieceImage(new ImageParser().getLabelIconOfPiece(pieceThatIsBeingMoved.getTypeOfPiece()));
+
             pieceThatIsBeingMoved.setNumOfMoves(pieceThatIsBeingMoved.getNumOfMoves() + 1);
         }
         selectedTile.getPieceInstance().setRow(row);
@@ -224,7 +245,6 @@ public class GameController {
 
 
         isDummyMove = true;
-//        selectedTile.getPieceInstance().setTilesThatAreAttacked(row, col);
         chessBoard.repaintTiles(tiles);
     }
 
@@ -330,26 +350,6 @@ public class GameController {
             return chessBoard.getChessBoard();
         }
         return dummyBoard;
-    }
-
-    public Piece getPieceThatIsBeingMoved() {
-        return pieceThatIsBeingMoved;
-    }
-
-    public int getNumberOfMovesForBlackKing() {
-        return numberOfMovesForBlackKing;
-    }
-
-    public void setNumberOfMovesForBlackKing(int numberOfMovesForBlackKing) {
-        this.numberOfMovesForBlackKing = numberOfMovesForBlackKing;
-    }
-
-    public int getNumberOfMovesForWhiteKing() {
-        return numberOfMovesForWhiteKing;
-    }
-
-    public void setNumberOfMovesForWhiteKing(int numberOfMovesForWhiteKing) {
-        this.numberOfMovesForWhiteKing = numberOfMovesForWhiteKing;
     }
 
     public int[] getWhiteKingPos() {

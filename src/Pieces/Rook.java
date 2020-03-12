@@ -222,6 +222,7 @@ public class Rook implements Piece {
         }
     }
 
+
     private boolean tryAndPin(int row, int col) {
         boolean pinned = false;
 
@@ -291,18 +292,6 @@ public class Rook implements Piece {
 
     public TypeOfPiece getTypeOfPiece() {
         return typeOfPiece;
-    }
-
-    public Turn getColorOfPiece() {
-        return colorOfPiece;
-    }
-
-    public void setColorOfPiece(Turn colorOfPiece) {
-        this.colorOfPiece = colorOfPiece;
-    }
-
-    public void setTypeOfPiece(TypeOfPiece typeOfPiece) {
-        this.typeOfPiece = typeOfPiece;
     }
 
     public int getNumOfMoves() {

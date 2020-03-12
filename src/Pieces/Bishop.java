@@ -219,18 +219,6 @@ public class Bishop implements Piece {
         return typeOfPiece;
     }
 
-    public Turn getColorOfPiece() {
-        return colorOfPiece;
-    }
-
-    public void setColorOfPiece(Turn colorOfPiece) {
-        this.colorOfPiece = colorOfPiece;
-    }
-
-    public void setTypeOfPiece(TypeOfPiece typeOfPiece) {
-        this.typeOfPiece = typeOfPiece;
-    }
-
     public int getNumOfMoves() {
         return numOfMoves;
     }

@@ -16,7 +16,7 @@ public class King implements Piece {
 
     private TypeOfPiece typeOfPiece;
 
-    private Turn colorOfPiece;
+    private Turn colorOfPiece = Turn.WHITE;
 
     private State state = State.Free;
 
@@ -70,9 +70,77 @@ public class King implements Piece {
             gameController.getChessBoard()[row - 1][col - 1].setTileState(TileState.AVAILABLE_MOVE);
 
         }
-
-
+        castle();
         return false;
+    }
+
+
+    private void castle() {
+        if (numOfMoves == 0 && gameController.isCheck() == false) {
+            if (colorOfPiece == Turn.BLACK) {
+                if (exist(0, 0)) {
+                    if (checkIfCanCastle(0, 1, 3)) {
+                        gameController.setDummyMove(false);
+                        gameController.getChessBoard()[0][0].setTileState(TileState.AVAILABLE_MOVE);
+                        gameController.getChessBoard()[0][0].getPieceInstance().setState(State.CanCastle);
+                        state = State.CanCastle;
+                    }
+                }
+                if (exist(0, 7)) {
+                    if (checkIfCanCastle(0, 5, 6)) {
+                        gameController.setDummyMove(false);
+                        gameController.getChessBoard()[0][7].setTileState(TileState.AVAILABLE_MOVE);
+                        gameController.getChessBoard()[0][7].getPieceInstance().setState(State.CanCastle);
+                        state = State.CanCastle;
+                    }
+                }
+            } else {
+                if (exist(7, 0)) {
+                    if (checkIfCanCastle(7, 1, 3)) {
+                        gameController.setDummyMove(false);
+                        gameController.getChessBoard()[7][0].setTileState(TileState.AVAILABLE_MOVE);
+                        gameController.getChessBoard()[7][0].getPieceInstance().setState(State.CanCastle);
+                        state = State.CanCastle;
+                    }
+                }
+                if (exist(7, 7)) {
+                    if (checkIfCanCastle(7, 5, 6)) {
+                        gameController.setDummyMove(false);
+                        gameController.getChessBoard()[7][7].setTileState(TileState.AVAILABLE_MOVE);
+                        gameController.getChessBoard()[7][7].getPieceInstance().setState(State.CanCastle);
+                        state = State.CanCastle;
+                    }
+                }
+            }
+
+        }
+    }
+
+    private boolean checkIfCanCastle(int row, int startCol, int endCol) {
+        boolean canCastle = true;
+        for (int i = startCol; i < endCol; i++) {
+            if (gameController.getChessBoard()[row][i].getPiece() == TypeOfPiece.EMPTY && checkIfTileIsAttacked(row, i))
+                return false;
+        }
+        return canCastle;
+    }
+
+    private boolean checkIfTileIsAttacked(int row, int col) {
+        TileState colorOfPieceAttacking = (colorOfPiece == Turn.BLACK) ? TileState.ATTACKED_BY_WHITE : TileState.ATTACKED_BY_BLACK;
+        return (gameController.getChessBoard()[row][col].getTileState() == colorOfPieceAttacking || gameController.getChessBoard()[row][col].getTileState() == TileState.ATTACKED_BY_BOTH);
+    }
+
+    private boolean exist(int row, int col) {
+
+        try {
+            gameController.getChessBoard()[row][col].getPieceInstance();
+
+            TypeOfPiece matchingPieceColor = (colorOfPiece == Turn.BLACK) ? TypeOfPiece.BLACK_ROOK : TypeOfPiece.WHITE_ROOK;
+
+            return gameController.getChessBoard()[row][col].getPiece() == matchingPieceColor && gameController.getChessBoard()[row][col].getPieceInstance().getNumOfMoves() == 0;
+        } catch (NullPointerException e) {
+            return false;
+        }
     }
 
 
@@ -184,18 +252,6 @@ public class King implements Piece {
 
     public TypeOfPiece getTypeOfPiece() {
         return typeOfPiece;
-    }
-
-    public Turn getColorOfPiece() {
-        return colorOfPiece;
-    }
-
-    public void setColorOfPiece(Turn colorOfPiece) {
-        this.colorOfPiece = colorOfPiece;
-    }
-
-    public void setTypeOfPiece(TypeOfPiece typeOfPiece) {
-        this.typeOfPiece = typeOfPiece;
     }
 
     public int getNumOfMoves() {

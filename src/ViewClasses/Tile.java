@@ -61,16 +61,16 @@ public class Tile extends JPanel {
             }
 
         }
-//            if (tileState == TileState.ATTACKED_BY_WHITE) {
-//                g.setColor(Color.CYAN);
-//                g.fillRect(0, 0, 100, 100);
+//        if (tileState == TileState.ATTACKED_BY_WHITE) {
+//            g.setColor(Color.CYAN);
+//            g.fillRect(0, 0, 100, 100);
 //
-//            }
-//            if (tileState == TileState.ATTACKED_BY_BLACK) {
-//                g.setColor(Color.RED);
-//                g.fillRect(0, 0, 100, 100);
-//            }
-//            if (tileState == TileState.ATTACKED_BY_BOTH) {
+//        }
+//        if (tileState == TileState.ATTACKED_BY_BLACK) {
+//            g.setColor(Color.RED);
+//            g.fillRect(0, 0, 100, 100);
+//        }
+//        if (tileState == TileState.ATTACKED_BY_BOTH) {
 //                g.setColor(Color.BLUE);
 //                g.fillRect(0, 0, 100, 100);
 //            }

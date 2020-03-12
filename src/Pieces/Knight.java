@@ -192,17 +192,6 @@ public class Knight implements Piece {
         return canSet;
     }
 
-    public Turn getColorOfPiece() {
-        return colorOfPiece;
-    }
-
-    public void setColorOfPiece(Turn colorOfPiece) {
-        this.colorOfPiece = colorOfPiece;
-    }
-
-    public void setTypeOfPiece(TypeOfPiece typeOfPiece) {
-        this.typeOfPiece = typeOfPiece;
-    }
 
     public int getNumOfMoves() {
         return numOfMoves;

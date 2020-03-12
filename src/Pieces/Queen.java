@@ -146,7 +146,7 @@ public class Queen implements Piece {
 
         try {
             if (!isTake) {
-                avaliable = gameController.checkIfMoveIsValid(rowToCheck, colToCheck) ||  gameController.checkIfCanTake(rowToCheck, colToCheck);
+                avaliable = gameController.checkIfMoveIsValid(rowToCheck, colToCheck) || gameController.checkIfCanTake(rowToCheck, colToCheck);
             }
 
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -291,17 +291,6 @@ public class Queen implements Piece {
         return typeOfPiece;
     }
 
-    public Turn getColorOfPiece() {
-        return colorOfPiece;
-    }
-
-    public void setColorOfPiece(Turn colorOfPiece) {
-        this.colorOfPiece = colorOfPiece;
-    }
-
-    public void setTypeOfPiece(TypeOfPiece typeOfPiece) {
-        this.typeOfPiece = typeOfPiece;
-    }
 
     public int getNumOfMoves() {
         return numOfMoves;

@@ -45,15 +45,9 @@ public class Tile extends JPanel {
         g.fillRect(0, 0, 100, 100);
         this.revalidate();
         if (pieceType != TypeOfPiece.EMPTY) {
-            if (tileState == TileState.ATTACKING) {
-                g.setColor(Color.red);
-                g.fillRect(25, 25, 50, 50);
-            }
             this.add(piece);
-
         } else {
             if (tileState == TileState.AVAILABLE_MOVE) {
-
                 g.setColor(Color.GRAY);
                 g.fillOval(20, 20, 40, 40);
             } else {
@@ -61,20 +55,6 @@ public class Tile extends JPanel {
             }
 
         }
-//        if (tileState == TileState.ATTACKED_BY_WHITE) {
-//            g.setColor(Color.CYAN);
-//            g.fillRect(0, 0, 100, 100);
-//
-//        }
-//        if (tileState == TileState.ATTACKED_BY_BLACK) {
-//            g.setColor(Color.RED);
-//            g.fillRect(0, 0, 100, 100);
-//        }
-//        if (tileState == TileState.ATTACKED_BY_BOTH) {
-//                g.setColor(Color.BLUE);
-//                g.fillRect(0, 0, 100, 100);
-//            }
-
 
     }
 
@@ -86,17 +66,11 @@ public class Tile extends JPanel {
         return colorOfTile;
     }
 
-    public void setColorOfTile(Color colorOfTile) {
-        this.colorOfTile = colorOfTile;
-    }
 
     public int getTileRow() {
         return tileRow;
     }
 
-    public void setTileRow(int tileRow) {
-        this.tileRow = tileRow;
-    }
 
     public void setPieceImage(JLabel piece) {
         this.piece = piece;
@@ -106,9 +80,6 @@ public class Tile extends JPanel {
         return tileCol;
     }
 
-    public void setTileCol(int tileCol) {
-        this.tileCol = tileCol;
-    }
 
     public void setPieceTo(TypeOfPiece piece) {
         this.pieceType = piece;

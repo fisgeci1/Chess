@@ -163,7 +163,4 @@ public class Pawn implements Piece {
         return tilesBeingAttacked;
     }
 
-    public void setTilesBeingAttacked(ArrayList<int[]> tilesBeingAttacked) {
-        this.tilesBeingAttacked = tilesBeingAttacked;
-    }
 }

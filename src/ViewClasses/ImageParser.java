@@ -40,8 +40,6 @@ public class ImageParser {
             case WHITE_KING:
                 return makeJLabelIcon(type.imagePath);
         }
-
-        //never should get here cause the enums are defined always!
         return null;
     }
 

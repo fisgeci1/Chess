@@ -16,9 +16,7 @@ public class Board extends JPanel {
     private final int rows = 8;
     private final int cols = 8;
     private GameController gameController = new GameController(this);
-
     private Tile[][] chessBoard = new Tile[rows][cols];
-    private Tile[][] testBoard = new Tile[rows][cols];
 
     public Board() {
 
@@ -59,7 +57,6 @@ public class Board extends JPanel {
                 if (tiles[i][j].getPieceInstance() != null) {
                     tiles[i][j].getPieceInstance().setTilesThatAreAttacked(i, j);
                     setTileStates(tiles, tiles[i][j].getPieceInstance().getTilesBeingAttacked(), tiles[i][j].getPieceInstance());
-                    setPieceStates(tiles[i][j].getPieceInstance().getPiecesThatArePinned());
                 }
             }
 
@@ -88,19 +85,6 @@ public class Board extends JPanel {
 
     }
 
-    private void setPieceStates(ArrayList<int[]> cords) {
-
-        try {
-            cords.forEach(pieceCord -> {
-                System.out.println(chessBoard[pieceCord[0]][pieceCord[1]].getPieceInstance().getTypeOfPiece());
-                chessBoard[pieceCord[0]][pieceCord[1]].getPieceInstance().setState(State.Pinned);
-            });
-        } catch (Exception e) {
-
-        }
-
-    }
-
     private void setUpBoard() {
         PieceFactory pieceFactory = new PieceFactory();
 
@@ -110,9 +94,9 @@ public class Board extends JPanel {
 
         pieceFactory.setUpRooks(chessBoard);
 
-//
-//        pieceFactory.setUpKnights(chessBoard);
-//        pieceFactory.setUpBishops(chessBoard);
+
+        pieceFactory.setUpKnights(chessBoard);
+        pieceFactory.setUpBishops(chessBoard);
 
 
         pieceFactory.setUpKingAndQueens(chessBoard);
@@ -120,28 +104,9 @@ public class Board extends JPanel {
 
     }
 
-    public Tile[][] getTestBoard() {
-        return testBoard;
-    }
-
-    public void setTestBoard(Tile[][] testBoard) {
-        this.testBoard = testBoard;
-    }
 
     public Tile[][] getChessBoard() {
         return chessBoard;
-    }
-
-    public void setChessBoard(Tile[][] chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public int getRows() {
-        return rows;
-    }
-
-    public int getCols() {
-        return cols;
     }
 
     public GameController getGameController() {
